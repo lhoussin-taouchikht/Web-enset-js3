@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solutions TP - Protocole HTTP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #2E75B6;
+        }
+        
+        h1 {
+            color: #2E75B6;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+        }
+        
+        h2 {
+            color: #2E75B6;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        h3 {
+            color: #4472C4;
+            font-size: 1.4em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        h4 {
+            color: #555;
+            font-size: 1.1em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        pre {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-left: 4px solid #2E75B6;
+            padding: 15px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: #2E75B6;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        td {
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .note {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .tp-section {
+            margin-bottom: 60px;
+            page-break-after: always;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Chapitre 6 : Le Protocole HTTP</h1>
+            <p class="subtitle">Solutions des Travaux Pratiques</p>
+        </header>
+
+        <!-- TP 1 -->
+        <div class="tp-section">
+            <h2>TP 1 : Exploration avec les DevTools - Solutions</h2>
+            
+            <h3>1.2 Observer une requête simple - Réponses</h3>
+            
+            <h4>Question 1 : Quel est le code de statut ?</h4>
+            <div class="success">
+                <strong>Réponse :</strong> 200 OK
+            </div>
+            
+            <h4>Question 2 : Quels headers de requête sont envoyés ?</h4>
+            <p>Les headers typiques incluent :</p>
+            <ul>
+                <li><code>Host: httpbin.org</code></li>
+                <li><code>User-Agent:</code> (informations sur le navigateur utilisé)</li>
+                <li><code>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</code></li>
+                <li><code>Accept-Language: fr-FR,fr;q=0.9</code></li>
+                <li><code>Accept-Encoding: gzip, deflate, br</code></li>
+                <li><code>Connection: keep-alive</code></li>
+                <li><code>Cache-Control: max-age=0</code></li>
+            </ul>
+            
+            <h4>Question 3 : Quel est le Content-Type de la réponse ?</h4>
+            <div class="success">
+                <strong>Réponse :</strong> application/json
+            </div>
+            
+            <h3>1.4 Tableau complété</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>URL</th>
+                        <th>Méthode</th>
+                        <th>Code</th>
+                        <th>Content-Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>httpbin.org/get</td>
+                        <td>GET</td>
+                        <td>200</td>
+                        <td>application/json</td>
+                    </tr>
+                    <tr>
+                        <td>httpbin.org/post</td>
+                        <td>POST</td>
+                        <td>200</td>
+                        <td>application/json</td>
+                    </tr>
+                    <tr>
+                        <td>httpbin.org/status/201</td>
+                        <td>GET</td>
+                        <td>201</td>
+                        <td>text/html</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TP 2 -->
+        <div class="tp-section">
+            <h2>TP 2 : Maîtrise de cURL - Solutions</h2>
+            
+            <h3>2.1 Question : Différence entre -i et -v</h3>
+            
+            <h4>Option -i (include)</h4>
+            <ul>
+                <li>Affiche les <strong>headers de réponse</strong> HTTP</li>
+                <li>Montre uniquement la réponse du serveur</li>
+                <li>Plus simple et concis</li>
+                <li>Utile pour voir rapidement les codes de statut et headers</li>
+            </ul>
+            
+            <h4>Option -v (verbose)</h4>
+            <ul>
+                <li><strong>Mode debug complet</strong></li>
+                <li>Affiche les headers de <strong>requête ET de réponse</strong></li>
+                <li>Montre les détails de connexion SSL/TLS</li>
+                <li>Affiche les négociations de protocole</li>
+                <li>Utile pour le débogage approfondi</li>
+            </ul>
+            
+            <div class="note">
+                <strong>En résumé :</strong> Utilisez <code>-i</code> pour voir simplement la réponse, et <code>-v</code> pour un débogage complet avec tous les détails de la communication.
+            </div>
+            
+            <h3>Exercice avancé - Solution</h3>
+            <p>Commande cURL complète qui remplit toutes les conditions :</p>
+            <pre>curl -i -X POST \
+  -H "Content-Type: application/json" \
+  -H "X-Custom-Header: MonHeader" \
+  -d '{"action": "test", "value": 42}' \
+  https://httpbin.org/post</pre>
+            
+            <h4>Explication des options :</h4>
+            <ul>
+                <li><code>-i</code> : Affiche les headers de réponse</li>
+                <li><code>-X POST</code> : Spécifie la méthode HTTP POST</li>
+                <li><code>-H</code> : Ajoute un header personnalisé (peut être utilisé plusieurs fois)</li>
+                <li><code>-d</code> : Définit le corps (body) de la requête</li>
+            </ul>
+        </div>
+
+        <!-- TP 3 -->
+        <div class="tp-section">
+            <h2>TP 3 : API REST avec JavaScript - Solutions</h2>
+            
+            <h3>Exercice pratique : fetchWithRetry</h3>
+            <p>Fonction qui effectue des tentatives multiples en cas d'erreur 5xx :</p>
+            
+            <pre>async function fetchWithRetry(url, options = {}, maxRetries = 3) {
+  let lastError;
+  
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await fetch(url, options);
+      
+      // Si erreur 5xx et il reste des tentatives, on réessaie
+      if (response.status >= 500 && response.status < 600) {
+        if (attempt < maxRetries) {
+          console.log(`Erreur ${response.status}, tentative ${attempt + 1}/${maxRetries}`);
+          // Attendre 1 seconde avant de réessayer
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          continue;
+        }
+        throw new Error(`Erreur serveur ${response.status} après ${maxRetries} tentatives`);
+      }
+      
+      // Pour les autres erreurs (4xx), on ne réessaie pas
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      // Succès : on retourne la réponse
+      return response;
+      
+    } catch (error) {
+      lastError = error;
+      
+      // Erreurs réseau : on réessaie
+      if (attempt < maxRetries) {
+        console.log(`Erreur réseau, tentative ${attempt + 1}/${maxRetries}`);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        continue;
+      }
+    }
+  }
+  
+  // Si on arrive ici, toutes les tentatives ont échoué
+  throw lastError;
+}</pre>
+            
+            <h4>Exemple d'utilisation :</h4>
+            <pre>// Utilisation simple
+fetchWithRetry('https://api.example.com/data')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Échec après tentatives:', error));
+
+// Avec options personnalisées et 5 tentatives
+fetchWithRetry('https://api.example.com/post', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ data: 'test' })
+}, 5)
+  .then(response => response.json())
+  .then(console.log);</pre>
+            
+            <div class="note">
+                <strong>Points clés de la solution :</strong>
+                <ul>
+                    <li>Réessaie uniquement pour les erreurs 5xx (serveur) et les erreurs réseau</li>
+                    <li>Ne réessaie PAS pour les erreurs 4xx (client)</li>
+                    <li>Attend exactement 1 seconde entre chaque tentative</li>
+                    <li>Lève une erreur appropriée après épuisement des tentatives</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TP 4 -->
+        <div class="tp-section">
+            <h2>TP 4 : Analyse des Headers de Sécurité - Solutions</h2>
+            
+            <h3>Exemple d'analyse complétée</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Site</th>
+                        <th>HSTS</th>
+                        <th>X-Frame</th>
+                        <th>CSP</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>github.com</td>
+                        <td>✓ Présent</td>
+                        <td>✓ DENY</td>
+                        <td>✓ Oui</td>
+                        <td>A+</td>
+                    </tr>
+                    <tr>
+                        <td>google.com</td>
+                        <td>✓ Présent</td>
+                        <td>✓ SAMEORIGIN</td>
+                        <td>✓ Oui</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>twitter.com</td>
+                        <td>✓ Présent</td>
+                        <td>✓ DENY</td>
+                        <td>✓ Oui</td>
+                        <td>A</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Détails des headers GitHub</h3>
+            
+            <h4>Strict-Transport-Security (HSTS)</h4>
+            <pre>max-age=31536000; includeSubDomains; preload</pre>
+            <p>Force HTTPS pendant 1 an, inclut tous les sous-domaines, et est dans la liste de préchargement des navigateurs.</p>
+            
+            <h4>X-Frame-Options</h4>
+            <pre>deny</pre>
+            <p>Empêche complètement l'affichage du site dans une iframe (protection contre le clickjacking).</p>
+            
+            <h4>X-Content-Type-Options</h4>
+            <pre>nosniff</pre>
+            <p>Empêche le navigateur de deviner le type MIME (protection contre les attaques MIME).</p>
+            
+            <h4>Content-Security-Policy</h4>
+            <pre>default-src 'none'; base-uri 'self'; ...</pre>
+            <p>Définit strictement les sources autorisées pour charger les ressources.</p>
+            
+            <h4>Referrer-Policy</h4>
+            <pre>origin-when-cross-origin, strict-origin-when-cross-origin</pre>
+            <p>Contrôle les informations envoyées dans le header Referer.</p>
+        </div>
+
+        <!-- TP 5 -->
+        <div class="tp-section">
+            <h2>TP 5 : Cache HTTP - Solutions</h2>
+            
+            <h3>Exercice - Page HTML avec cache</h3>
+            
+            <h4>index.html</h4>
+            <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Test Cache HTTP&lt;/title&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Test du cache HTTP&lt;/h1&gt;
+  &lt;img src="image.jpg" alt="Test"&gt;
+  &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+            
+            <h4>Configuration serveur (Node.js/Express)</h4>
+            <pre>const express = require('express');
+const app = express();
+
+// Cache pour les fichiers CSS (longue durée - 1 an)
+app.use('/style.css', (req, res, next) => {
+  res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+  res.setHeader('ETag', 'w/"css-v1"');
+  next();
+});
+
+// Cache pour les images (longue durée - 1 an)
+app.use('/image.jpg', (req, res, next) => {
+  res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+  res.setHeader('ETag', 'w/"img-v1"');
+  next();
+});
+
+// Cache pour JavaScript (durée moyenne - 1 jour)
+app.use('/script.js', (req, res, next) => {
+  res.setHeader('Cache-Control', 'public, max-age=86400');
+  res.setHeader('ETag', 'w/"js-v1"');
+  next();
+});
+
+// HTML sans cache (toujours frais)
+app.use('/', (req, res, next) => {
+  res.setHeader('Cache-Control', 'no-cache');
+  next();
+});
+
+app.use(express.static('public'));
+app.listen(3000, () => console.log('Serveur démarré sur le port 3000'));</pre>
+            
+            <h3>Recommandations de cache par type de fichier</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type de fichier</th>
+                        <th>Cache-Control</th>
+                        <th>Raison</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>HTML</td>
+                        <td>no-cache ou max-age=0</td>
+                        <td>Contenu dynamique, doit être validé à chaque fois</td>
+                    </tr>
+                    <tr>
+                        <td>CSS/JS versionné</td>
+                        <td>public, max-age=31536000, immutable</td>
+                        <td>Fichiers avec hash dans le nom (style.a3f2b1.css), jamais modifiés</td>
+                    </tr>
+                    <tr>
+                        <td>Images</td>
+                        <td>public, max-age=604800</td>
+                        <td>Changent rarement (cache 1 semaine)</td>
+                    </tr>
+                    <tr>
+                        <td>API JSON</td>
+                        <td>no-store</td>
+                        <td>Données sensibles ou en temps réel, jamais mises en cache</td>
+                    </tr>
+                    <tr>
+                        <td>Polices (fonts)</td>
+                        <td>public, max-age=31536000</td>
+                        <td>Ne changent jamais une fois publiées</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="note">
+                <strong>Bonnes pratiques :</strong>
+                <ul>
+                    <li>Utilisez le <strong>versioning</strong> dans les noms de fichiers (style.v2.css)</li>
+                    <li>Ajoutez l'attribut <code>immutable</code> pour les fichiers versionnés</li>
+                    <li>Combinez <code>max-age</code> avec <code>ETag</code> pour validation conditionnelle</li>
+                    <li>Utilisez <code>public</code> pour autoriser le cache des CDN</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Exercices récapitulatifs -->
+        <div class="tp-section">
+            <h2>Exercices Récapitulatifs - Solutions</h2>
+            
+            <h3>Exercice 1 : Client HTTP minimaliste</h3>
+            <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Client HTTP&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: Arial; margin: 20px; }
+    input, select, textarea { 
+      width: 100%; 
+      margin: 5px 0; 
+      padding: 8px; 
+    }
+    button { 
+      padding: 10px 20px; 
+      background: #2E75B6; 
+      color: white; 
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover { background: #1a5a8f; }
+    pre { 
+      background: #f5f5f5; 
+      padding: 10px; 
+      overflow-x: auto; 
+      border-left: 4px solid #2E75B6;
+    }
+    .status { 
+      font-size: 1.2em; 
+      font-weight: bold; 
+      color: #2E75B6; 
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Client HTTP Minimaliste&lt;/h1&gt;
+  
+  &lt;form id="httpForm"&gt;
+    &lt;label&gt;URL:&lt;/label&gt;
+    &lt;input type="text" id="url" value="https://httpbin.org/get"&gt;
+    
+    &lt;label&gt;Méthode:&lt;/label&gt;
+    &lt;select id="method"&gt;
+      &lt;option&gt;GET&lt;/option&gt;
+      &lt;option&gt;POST&lt;/option&gt;
+      &lt;option&gt;PUT&lt;/option&gt;
+      &lt;option&gt;DELETE&lt;/option&gt;
+    &lt;/select&gt;
+    
+    &lt;label&gt;Body (JSON):&lt;/label&gt;
+    &lt;textarea id="body" rows="4"&gt;{"name": "John", "email": "john@example.com"}&lt;/textarea&gt;
+    
+    &lt;button type="submit"&gt;Envoyer la requête&lt;/button&gt;
+  &lt;/form&gt;
+  
+  &lt;h2&gt;Réponse&lt;/h2&gt;
+  &lt;div id="response"&gt;&lt;/div&gt;
+  
+  &lt;script&gt;
+    document.getElementById('httpForm').addEventListener('submit', async (e) =&gt; {
+      e.preventDefault();
+      
+      const url = document.getElementById('url').value;
+      const method = document.getElementById('method').value;
+      const body = document.getElementById('body').value;
+      
+      try {
+        const options = { method };
+        
+        // Ajouter le body pour les méthodes non-GET
+        if (method !== 'GET' && body) {
+          options.headers = { 'Content-Type': 'application/json' };
+          options.body = body;
+        }
+        
+        const response = await fetch(url, options);
+        
+        // Récupérer les headers
+        const headers = {};
+        response.headers.forEach((value, key) =&gt; {
+          headers[key] = value;
+        });
+        
+        // Récupérer le corps
+        const responseBody = await response.text();
+        
+        // Afficher le résultat
+        document.getElementById('response').innerHTML = `
+          &lt;div class="status"&gt;Statut: ${response.status} ${response.statusText}&lt;/div&gt;
+          
+          &lt;h3&gt;Headers de réponse:&lt;/h3&gt;
+          &lt;pre&gt;${JSON.stringify(headers, null, 2)}&lt;/pre&gt;
+          
+          &lt;h3&gt;Corps de la réponse:&lt;/h3&gt;
+          &lt;pre&gt;${responseBody}&lt;/pre&gt;
+        `;
+        
+      } catch (error) {
+        document.getElementById('response').innerHTML =
+          `&lt;p style="color:red; font-weight:bold"&gt;❌ Erreur: ${error.message}&lt;/p&gt;`;
+      }
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+        </div>
+
+        <!-- Questions théoriques -->
+        <div class="tp-section">
+            <h2>Exercice 2 : Questions théoriques - Réponses détaillées</h2>
+            
+            <h3>Question 1 : Différence entre no-cache et no-store</h3>
+            
+            <h4>no-cache</h4>
+            <ul>
+                <li>Le navigateur <strong>peut stocker</strong> la ressource en cache</li>
+                <li>MAIS doit <strong>valider avec le serveur</strong> avant chaque utilisation</li>
+                <li>Utilise les headers <code>ETag</code> ou <code>Last-Modified</code> pour la validation</li>
+                <li>Si la ressource n'a pas changé → serveur répond <code>304 Not Modified</code></li>
+                <li>Économie de bande passante (pas de retransmission du contenu)</li>
+            </ul>
+            
+            <h4>no-store</h4>
+            <ul>
+                <li><strong>Aucune mise en cache</strong> autorisée</li>
+                <li>Ni dans le cache du navigateur, ni dans les caches intermédiaires (proxies, CDN)</li>
+                <li>Chaque requête télécharge la ressource complète</li>
+                <li>Utilisé pour les <strong>données sensibles</strong> (bancaires, médicales, etc.)</li>
+                <li>Plus sécurisé mais plus coûteux en bande passante</li>
+            </ul>
+            
+            <div class="note">
+                <strong>Exemple pratique :</strong><br>
+                <code>Cache-Control: no-cache</code> → Page d'actualités (vérifier si nouvelle version existe)<br>
+                <code>Cache-Control: no-store</code> → Relevé bancaire (ne jamais mettre en cache)
+            </div>
+            
+            <h3>Question 2 : Pourquoi POST n'est-il pas idempotent ?</h3>
+            
+            <p><strong>Définition d'idempotence :</strong> Une opération est idempotente si l'exécuter plusieurs fois produit le même résultat qu'une seule exécution.</p>
+            
+            <h4>POST n'est pas idempotent car :</h4>
+            <ul>
+                <li>Chaque requête POST peut créer une <strong>nouvelle ressource</strong></li>
+                <li>L'état du serveur <strong>change différemment</strong> à chaque requête identique</li>
+                <li>Exemple : <code>POST /commandes</code> envoyé 2 fois → 2 commandes distinctes créées</li>
+                <li>Aucune garantie que le résultat soit identique</li>
+            </ul>
+            
+            <h4>Méthodes idempotentes (pour comparaison) :</h4>
+            <ul>
+                <li><code>GET</code> : Lire 10 fois → même résultat</li>
+                <li><code>PUT</code> : Mettre à jour 10 fois avec les mêmes données → même état final</li>
+                <li><code>DELETE</code> : Supprimer 10 fois → même état final (déjà supprimé)</li>
+            </ul>
+            
+            <div class="warning">
+                <strong>Attention :</strong> C'est pourquoi les navigateurs demandent confirmation pour renvoyer un formulaire POST, mais pas pour rafraîchir une page GET.
+            </div>
+            
+            <h3>Question 3 : Que se passe-t-il si le serveur renvoie un code 301 ?</h3>
+            
+            <h4>Code 301 - Moved Permanently (Déplacé définitivement)</h4>
+            
+            <p><strong>Comportement :</strong></p>
+            <ul>
+                <li>Indique que la ressource a été <strong>déplacée définitivement</strong> vers une nouvelle URL</li>
+                <li>Le serveur renvoie la nouvelle URL dans le header <code>Location</code></li>
+                <li>Le navigateur <strong>redirige automatiquement</strong> vers la nouvelle URL</li>
+                <li>Les moteurs de recherche <strong>mettent à jour leurs index</strong> avec la nouvelle URL</li>
+                <li>Le navigateur <strong>peut mettre en cache</strong> cette redirection</li>
+            </ul>
+            
+            <h4>Exemple :</h4>
+            <pre>HTTP/1.1 301 Moved Permanently
+Location: https://www.example.com/nouvelle-page
+Content-Length: 0</pre>
+            
+            <h4>Différence avec 302 (Moved Temporarily) :</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Durée</th>
+                        <th>Cache</th>
+                        <th>SEO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>301</td>
+                        <td>Permanent</td>
+                        <td>Oui</td>
+                        <td>Transfère le référencement</td>
+                    </tr>
+                    <tr>
+                        <td>302</td>
+                        <td>Temporaire</td>
+                        <td>Non</td>
+                        <td>Garde l'ancienne URL</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Question 4 : À quoi sert le header Origin ?</h3>
+            
+            <h4>Le header Origin :</h4>
+            <ul>
+                <li>Indique <strong>l'origine de la requête</strong> (protocole + domaine + port)</li>
+                <li>Utilisé pour le mécanisme <strong>CORS</strong> (Cross-Origin Resource Sharing)</li>
+                <li>Permet au serveur de décider d'autoriser ou non la requête</li>
+                <li>Automatiquement ajouté par le navigateur pour les requêtes cross-origin</li>
+                <li>Ne peut pas être modifié par JavaScript (sécurité)</li>
+            </ul>
+            
+            <h4>Exemple :</h4>
+            <pre>Origin: https://example.com</pre>
+            
+            <h4>Fonctionnement CORS :</h4>
+            <ol>
+                <li>Site A (https://site-a.com) fait une requête vers API B (https://api-b.com)</li>
+                <li>Navigateur ajoute : <code>Origin: https://site-a.com</code></li>
+                <li>API B vérifie l'origine et répond avec :
+                    <pre>Access-Control-Allow-Origin: https://site-a.com</pre>
+                </li>
+                <li>Navigateur autorise la réponse si les origines correspondent</li>
+            </ol>
+            
+            <div class="warning">
+                <strong>Sécurité :</strong> Sans CORS, un site malveillant pourrait lire vos données sur d'autres sites où vous êtes connecté.
+            </div>
+            
+            <h3>Question 5 : Pourquoi utiliser HttpOnly sur les cookies de session ?</h3>
+            
+            <h4>L'attribut HttpOnly :</h4>
+            <ul>
+                <li><strong>Empêche l'accès au cookie via JavaScript</strong> (<code>document.cookie</code>)</li>
+                <li>Le cookie est <strong>uniquement envoyé dans les requêtes HTTP</strong></li>
+                <li>Protège contre les attaques <strong>XSS</strong> (Cross-Site Scripting)</li>
+                <li>Essentiel pour les cookies de session et d'authentification</li>
+            </ul>
+            
+            <h4>Exemple de cookie sécurisé :</h4>
+            <pre>Set-Cookie: sessionId=abc123xyz; HttpOnly; Secure; SameSite=Strict</pre>
+            
+            <h4>Attributs de sécurité combinés :</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Attribut</th>
+                        <th>Protection</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>HttpOnly</td>
+                        <td>XSS</td>
+                        <td>Pas d'accès JavaScript au cookie</td>
+                    </tr>
+                    <tr>
+                        <td>Secure</td>
+                        <td>Interception</td>
+                        <td>Cookie envoyé uniquement en HTTPS</td>
+                    </tr>
+                    <tr>
+                        <td>SameSite</td>
+                        <td>CSRF</td>
+                        <td>Cookie non envoyé dans requêtes cross-site</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h4>Scénario d'attaque sans HttpOnly :</h4>
+            <ol>
+                <li>Attaquant injecte du JavaScript malveillant (XSS)</li>
+                <li>Le script lit le cookie de session : <code>document.cookie</code></li>
+                <li>Le cookie est envoyé au serveur de l'attaquant</li>
+                <li>L'attaquant peut usurper l'identité de la victime</li>
+            </ol>
+            
+            <div class="success">
+                <strong>Avec HttpOnly :</strong> Le JavaScript ne peut pas lire le cookie → attaque XSS neutralisée pour le vol de session.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
