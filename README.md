@@ -14,13 +14,23 @@ Réponse : **200 OK**
 Les headers typiques incluent :
 
 ```
-Host: httpbin.org
-User-Agent: (informations sur le navigateur utilisé)
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: fr-FR,fr;q=0.9
-Accept-Encoding: gzip, deflate, br
-Connection: keep-alive
-Cache-Control: max-age=0
+"headers": {
+    "Accept": "application/json",
+    "Accept-Encoding": "gzip, deflate, br, zstd",
+    "Accept-Language": "fr-FR,fr;q=0.5",
+    "Host": "httpbin.org",
+    "Priority": "u=1, i",
+    "Referer": "https://httpbin.org/",
+    "Sec-Ch-Ua": "\"Brave\";v=\"147\", \"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"147\"",
+    "Sec-Ch-Ua-Mobile": "?0",
+    "Sec-Ch-Ua-Platform": "\"Windows\"",
+    "Sec-Fetch-Dest": "empty",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Site": "same-origin",
+    "Sec-Gpc": "1",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "X-Amzn-Trace-Id": "Root=1-69f0dc80-243843ed7ce8f3db5181a35a"
+  }
 ```
 
 **Question 3 : Quel est le Content-Type de la réponse ?**  
