@@ -207,8 +207,3 @@ app.use('/style.css', (req, res, next) => {
 
 - Protège contre XSS
 - Empêche accès JS aux cookies
-
----
-
-**Fin du document**
-
